@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import {getDocs, collection} from 'firebase/firestore';
 import {db} from './firebase';
-import { getStorage, ref, deleteObject } from "firebase/storage";
+
 
 const useFetch = (dbName) => {
 
