@@ -1,15 +1,20 @@
 
 import BlogList from './BlogList';
 import useFetch from './useFetch';
+import {firebase} from './firebase';
+import { addDoc } from 'firebase/firestore';  
+
 
 const Home = () => {
 
-    const {data: blogs, isPendoing, error} = useFetch('http://localhost:8000/blogs');
+    const {data: blogs, isPending, error} = useFetch('blog');
+ 
+
 
     return ( 
         <div className="home">
             {error && <div>{error}</div>}
-            {isPendoing && <div>Loading...</div>}
+            {isPending && <div>Loading...</div>}
             {blogs && <BlogList blogs={blogs} title="All blogs" />}
             
             

@@ -1,30 +1,53 @@
 import { useState } from "react";
 import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import useFetch from "./useFetch";
+import { addDoc, collection } from 'firebase/firestore';  
+import {db} from './firebase';
 
 const Create = () => {
+
+    const {data: blogData} = useFetch('http://localhost:8000/blogs');
+
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
     const [author, setAuthor] = useState('mario');
     const [isPending, setIsPending] = useState(false);
     const history = useHistory();
+    let lastID = 0;
+    const blogCollection = collection(db, "blog")
+    
+    const createPost = async () => {
+        await addDoc(blogCollection, {title, body, author})
 
+    }
+
+    
     const handleSubmit = (e) => {
         e.preventDefault();
         const blog = {title, body, author};
-        console.log(blog);
-
+        
         setIsPending(true);
 
-        fetch('http://localhost:8000/blogs/', {
-            method: 'POST',
-            headers: {"Content-Type": "application/json"},
-            body: JSON.stringify(blog)
-        }).then(() => {
+        createPost().then(() => {
             console.log('new blog added');
             setIsPending(false);
+            // lastID = blogData.length + 1;
+            // console.log(lastID);
             history.push('/');
-
         })
+
+        // fetch('http://localhost:8000/blogs/', {
+        //     method: 'POST',
+        //     headers: {"Content-Type": "application/json"},
+        //     body: JSON.stringify(blog)
+        // }).then(() => {
+        //     console.log('new blog added');
+        //     setIsPending(false);
+        //     lastID = blogData.length + 1;
+        //     console.log(lastID);
+        //     history.push('/blog/' + lastID);
+
+        // })
     }
 
     return ( 

@@ -1,27 +1,34 @@
 import { useState, useEffect } from 'react';
+import {getDocs, collection} from 'firebase/firestore';
+import {db} from './firebase';
+import { getStorage, ref, deleteObject } from "firebase/storage";
 
-const useFetch = (url) => {
+const useFetch = (dbName) => {
 
     const [data, setData] = useState(null);
-    const [isPendoing, setIsPending] = useState(true);
+    const [isPending, setIsPending] = useState(true);
     const [error , setError] = useState(null);
 
+    const getData = async (dbName) => {
+        const dataRes = await getDocs(collection(db, dbName));
+        const rawData = dataRes.docs.map((doc) => ({...doc.data(), id: doc.id}));
+        setData(rawData); 
+        
+    };
+    
 
     useEffect(() => {
-        
-        
-        setTimeout(() => {
-            fetch(url)
-                .then(res => {
-                    if(!res.ok){
-                        throw Error('could not fetch the data for that resource');
+
+        getData(dbName)
+                .then( () => {
+                    if(data === null){
+                        //throw Error('Loading...');
                     }else{
-                    return res.json();
+                        console.log('data fetched');
                     }
                 })
                 .then(data => {
                     setError(null);
-                    setData(data);
                     setIsPending(false);
                 })
                 .catch(err => {
@@ -29,12 +36,33 @@ const useFetch = (url) => {
                     setIsPending(false);
                     
                 })
+        
+        
+        // setTimeout(() => {
+        //     fetch(url)
+        //         .then(res => {
+        //             if(!res.ok){
+        //                 throw Error('could not fetch the data for that resource');
+        //             }else{
+        //             return res.json();
+        //             }
+        //         })
+        //         .then(data => {
+        //             setError(null);
+        //             setData(data);
+        //             setIsPending(false);
+        //         })
+        //         .catch(err => {
+        //             setError(err.message);
+        //             setIsPending(false);
+                    
+        //         })
 
-        }, 1000); 
+        // }, 1000); 
        
-    } , [url]);
+    } , [dbName]);
 
-return {data, isPendoing, error};
+return {data, isPending, error};
 }
 
 export default useFetch;
