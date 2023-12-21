@@ -21,7 +21,7 @@ const useFetch = (dbName) => {
 
         getData(dbName)
                 .then( () => {
-                    
+                    setIsPending(false);
                     console.log('data fetched');
                     
                 })
