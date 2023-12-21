@@ -30,7 +30,7 @@ function App() {
           </Route>
 
           <Route path = '/name'>
-            <AddName />
+           {!isPending && <AddName authorList={authorList} />}
           </Route>
 
           <Route path = '*'>

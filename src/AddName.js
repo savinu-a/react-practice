@@ -1,38 +1,35 @@
-import { useEffect, useState } from "react";
-import {getDocs, addDoc, collection} from 'firebase/firestore';
+import { useState } from "react";
+import {addDoc, collection} from 'firebase/firestore';
 import {db} from './firebase';
 import {useHistory} from 'react-router-dom';
 
 
 
 
-const AddName = () => {
+const AddName = ({authorList}) => {
     const [name, setName] = useState('');
-    const [fetched, setFetched] = useState(false);
-    
-    const [dataRes, setDataRes] = useState(null);
     // const [nameList, setNameList] = useState([]);
     const history = useHistory();
-    let nameList = [];
-    
+    let nameList = authorList.map((author) => author.name);
+    // console.log(nameList);
 
-    const grabData = async () => {
-        const tempData = await getDocs(collection(db, "authors"));
-        setDataRes(tempData);
-        setFetched(true);
-        // console.log('data fetched', dataRes); 
+    // const grabData = async () => {
+    //     const tempData = await getDocs(collection(db, "authors"));
+    //     setDataRes(tempData);
+    //     setFetched(true);
+    //     // console.log('data fetched', dataRes); 
         
-        if(dataRes !== null){
-            setFetched(false);
-            const names = dataRes.docs.map((doc) => ({...doc.data(), id: doc.id}));
-            const onlyNames = names.map((name) => name.name);
-            nameList = onlyNames;
-            // console.log(nameList, "second fetch", onlyNames);
-            setFetched(true);
+    //     if(dataRes !== null){
+    //         setFetched(false);
+    //         const names = dataRes.docs.map((doc) => ({...doc.data(), id: doc.id}));
+    //         const onlyNames = names.map((name) => name.name);
+    //         nameList = onlyNames;
+    //         // console.log(nameList, "second fetch", onlyNames);
+    //         setFetched(true);
             
-        };
+    //     };
         
-    }; 
+    // }; 
 
     
 
@@ -48,36 +45,24 @@ const AddName = () => {
 
     const handleClick = () => {
         
-        
-        
-        grabData()
-
-            .then(() => {
-            // console.log(name);
-            // console.log(nameList);
-            if(( fetched && nameList.includes(name))){
-                alert('Name already exists');
-                grabData();
-                
-            }else if(nameList !== null){
-                createPost().then(() => {
-                    console.log('new name added');
-                    history.push('/create');
-                }); 
-            };    
+           
+        // console.log(name);
+        // console.log(nameList);
+        if(( nameList.includes(name))){
+            alert('Name already exists');
             
-        });
-
-        
-        
+            
+        }else if(nameList !== null){
+            createPost().then(() => {
+                console.log('new name added');
+                history.push('/create');
+            }); 
+        }; 
         
       
     };
 
-    useEffect(() => {
-        grabData();
-        console.log(nameList, "first fetch" );
-    }, []); 
+   
 
     return ( 
         <div className="add-name">
