@@ -1,9 +1,9 @@
 import { useHistory, useParams } from "react-router-dom/cjs/react-router-dom.min";
 import useFetch from "./useFetch";
-import {getDocs, collection, deleteDoc, doc} from 'firebase/firestore';
+import {deleteDoc, doc} from 'firebase/firestore';
 import {db} from './firebase';
-import { getStorage, ref, deleteObject } from "firebase/storage";
-import { useState } from "react";
+
+
 
 
 

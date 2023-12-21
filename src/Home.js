@@ -1,8 +1,7 @@
 
 import BlogList from './BlogList';
 import useFetch from './useFetch';
-import {firebase} from './firebase';
-import { addDoc } from 'firebase/firestore';  
+
 
 
 const Home = () => {

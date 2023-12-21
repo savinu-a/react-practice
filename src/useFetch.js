@@ -21,15 +21,9 @@ const useFetch = (dbName) => {
 
         getData(dbName)
                 .then( () => {
-                    if(data === null){
-                        //throw Error('Loading...');
-                    }else{
-                        console.log('data fetched');
-                    }
-                })
-                .then(data => {
-                    setError(null);
-                    setIsPending(false);
+                    
+                    console.log('data fetched');
+                    
                 })
                 .catch(err => {
                     setError(err.message);
