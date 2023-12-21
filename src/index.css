@@ -103,3 +103,35 @@
   border-radius: 8px;
   cursor: pointer;
 }
+.create p, a{
+  color: #9e9e9e;
+  padding: 8px;
+
+}
+
+/* add new name */
+.add-name {
+  max-width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+.add-name label {
+  text-align: left;
+  display: block;
+}
+.add-name input {
+  width: 100%;
+  padding: 6px 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  box-sizing: border-box;
+  display: block;
+}
+.add-name button {
+  background: #f1356d;
+  color: #fff;
+  border: 0;
+  padding: 8px;
+  border-radius: 8px;
+  cursor: pointer;
+}

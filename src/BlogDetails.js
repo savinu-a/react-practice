@@ -18,11 +18,11 @@ const BlogDetails = () => {
 
     if (blogList !== null){       
         blog = blogList.find((blog) => blog.id === id);
-        console.log(blog);
+        
     }
     
     const handleDelete = (id) => {
-        console.log(currentID);
+        // console.log(currentID);
         const postDoc = doc(db, "blog", currentID);
         deleteDoc(postDoc);
         history.push('/');
